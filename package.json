@@ -1,0 +1,11 @@
+{
+  "name": "SocketsApp",
+  "version": "1.0.0",
+  "description": "chatty app",
+  "main": "server.js",
+  "dependencies": {
+    "ejs": "^2.3.1",
+    "express": "*",
+    "socket.io": "*"
+  }
+}

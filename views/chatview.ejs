@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Chat app</title>
+
+	<style>
+		body{
+			padding:0;
+			margin:0;
+			-webkit-box-sizing: border-box;
+		}
+		header{
+			width:100%;
+			margin:0;
+			padding:0;
+			text-align:center;
+		}
+		header ul li{
+			display:inline-block;
+			padding: 6px;
+		}
+		header ul li a{
+			font-size: 18px;
+			text-decoration:none;
+			font-family:sans-serif;
+			color:#75FFFF;
+		}
+
+		#Section{
+			width: 40%;
+			font-family:sans-serif;
+			text-align:center;
+			margin:0 auto;
+			height: 500px;
+			margin-top: 80px;
+			color:#ccc;
+		}
+
+		#chatbox{
+			width:100%;
+			height:80%;
+			overflow:scroll;
+			border:1px solid #ccc;
+			resize:none;
+		}
+
+		#Section input{
+			width:100%;
+			height:20%;
+			border:1px solid #ccc;
+			font-size:17px;
+			font-family:sans-serif;
+			color:black;
+			overflow: scroll;
+		}
+		#Section button{
+			padding:10px;
+			background-color:#3399FF;
+			color:#fff;
+			border:1px solid blue;
+		}
+
+		#a li{
+			text-align:left;
+			color:#75FFFF;
+			border-bottom:1px solid black;
+			list-style:none;
+		}
+	</style>
+
+	<script src = "/socket.io/socket.io.js"></script>
+
+	<script>
+		var socket = io();
+
+		window.onload = function(){
+
+		};
+
+		function submitIt(){
+			var text = document.getElementById("enterchat");
+			var ul = document.getElementById("a");
+			var li = document.createElement("li");
+			li.innerHTML = text.value;
+			ul.appendChild(li);
+			socket.emit("chat message", text.value);
+			text.value = "";
+		}
+
+		socket.on("chat message", function(msg){
+			var ul = document.getElementById("a");
+			var li = document.createElement("li");
+			li.innerHTML = msg.toString();
+			ul.appendChild(li);
+		});
+	</script>
+</head>
+<body>
+	<header>
+		<nav>
+			<ul>
+				<li><a href="/">Home</a></li>
+				<li><a href="/chat">Chat</a></li>
+				<li><a href="#">About</a></li>
+			</ul>
+		</nav>
+	</header>
+
+	<div id = "Section">
+		<div id = "chatbox">
+			<ul id = "a">
+			</ul>
+		</div>
+
+		<input type="text" id = "enterchat">
+		<button onClick = "submitIt()">Submit</button>
+	</div>
+
+</body>
+</html>
